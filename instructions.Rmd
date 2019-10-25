@@ -1,0 +1,39 @@
+#use  the R file "HIVMMER Analysis.txt" to create the bash file that will run HIVMMER
+
+
+
+
+#   #!/bin/sh
+#   needs to be added to top of script
+#   did this in the R code now
+
+#Need to covert windows carriage returns to unix carriage returns, use this command, replacing my filenames with yours:
+
+```
+awk '{ sub("\r$", ""); print }' HIVMMERCommands2.sh> HIVMER2unix.sh
+awk '{ sub("\r$", ""); print }' ~/JOLabShared/SaraDrescher/Code/pt_cons_blastcommands2.txt> ~/JOLabShared/SaraDrescher/Code/pt_cons_blastcommands2.sh
+```
+
+#then
+``` 
+sbatch ~/JOLabShared/SaraDrescher/Code/pt_cons_blastcommands2.sh
+~/JOLabShared/SaraDrescher/Code/pt_cons_blastcommands2.sh
+
+```
+
+#You need an account on gizmo first--email scicomp. they got it set up within minutes.
+# check it's running with
+```
+squeue -u sdresche
+```
+#put in your username in place of sdresche
+
+#if you don't see any processes, find the eror by reviewing the log:
+```
+tail -f slurm-36720921.txt
+```
+#put your job number in place of 36720921
+# it will NOT throw an error if you have filled up your disk space. Best to put out put in JOLabshare to avoid that problem, as it makes many GB of output.
+
+
+

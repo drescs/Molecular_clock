@@ -1,0 +1,96 @@
+#load bowtie on nomachine
+module load Bowtie2
+
+#create HXB2 index
+bowtie2-build "//home/sdresche/Documents/molecular_clock/nano/K03455.fasta" HXB2
+
+#would build human index but this will take forever so load premade
+## bowtie2-build "//home/sdresche/Documents/GCA_000001405.27_GRCh38.p12_genomic.fna" Human
+
+export BOWTIE2_INDEXES="/home/sdresche/Documents/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index"
+
+bowtie2-inspect -s GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index
+
+
+
+#align to HXB2
+bowtie2 -q --local -x  HXB2 -1 /home/sdresche/Documents/molecular_clock/nano/7_S7_L001_R1_001.fastq.gz -2 /home/sdresche/Documents/molecular_clock/nano/7_S7_L001_R2_001.fastq.gz -S /home/sdresche/Documents/bowtie_output/sample7_HXB.sam
+
+#align to Q23
+bowtie2 -q --local -x  Q23 -1 /home/sdresche/Documents/molecular_clock/nano/7_S7_L001_R1_001.fastq.gz -2 /home/sdresche/Documents/nano/7_S7_L001_R2_001.fastq.gz -S /home/sdresche/Documents/bowtie_output/sample7_Q23.sam
+
+#align to human
+bowtie2 -q --local --un-conc /home/sdresche/Documents/nano/unmapped_to_human --al-conc /home/sdresche/Documents/nano/mapped_to_human -x GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index -1 /home/sdresche/Documents/nano/1_S1_L001_R1_001.fastq.gz -2 /home/sdresche/Documents/nano/1_S1_L001_R2_001.fastq.gz -S /home/sdresche/Documents/nano/SAM01.sam
+
+
+#convert SAM to BAM
+#HXB2
+samtools view -b -S -o /home/sdresche/Documents/bowtie_output/sample7_HXB.bam /home/sdresche/Documents/bowtie_output/sample7_HXB.sam 
+#Q23
+samtools view -b -S -o /home/sdresche/Documents/nano/SAMtoQ23.bam /home/sdresche/Documents/nano/SAM_Q23.sam 
+
+#sort
+samtools sort /home/sdresche/Documents/bowtie_output/sample7_HXB.bam /home/sdresche/Documents/bowtie_output/sample7_HXB.sorted
+
+samtools sort /home/sdresche/Documents/nano/SAMtoQ23.bam /home/sdresche/Documents/nano/BAMtoQ23.sorted
+
+#make Igv index
+samtools index /home/sdresche/Documents/bowtie_output/sample7_HXB.sorted.bam
+samtools index /home/sdresche/Documents/nano/BAMtoQ23.sorted.bam
+
+#need to make an alias file for IGV and then can use it
+#see:
+http://software.broadinstitute.org/software/igv/loaddata
+
+
+#Now I'll try to make a sample specific consensus with bcf tools
+module load bcftools
+
+#faidx
+#samtools faidx <ref.fasta> [region1 [...]]
+
+#Index reference sequence in the FASTA format or extract subsequence from indexed reference #sequence. If no region is specified, faidx will index the file and create <ref.fasta>.fai on #the disk. If regions are specified, the subsequences will be retrieved and printed to stdout in #the FASTA format. The input file can be compressed in the BGZF format.
+
+#need to have faidx with same name in same directory of the samtools mpileup
+
+samtools faidx //home/sdresche/Documents/K03455.fasta
+
+
+samtools mpileup -uf ref.fa aln.bam | bcftools call -c | vcfutils.pl vcf2fq > cns.fq
+# call variants
+
+#which mpileup? The bcf one didnt' work so I'll try samtools
+
+#Ok this one works:
+samtools mpileup -Ou -f K03455.fasta nano/BAMtoHXB2.sorted.bam | bcftools call -mv -Oz -o  nano/calls.vcf.gz
+
+samtools mpileup -f K03455.fasta nano/BAMtoHXB2.sorted.bam | bcftools call -mv -Oz > calls.vcf.gz
+
+samtools mpileup -Ou  -f K03455.fasta nano/BAMtoHXB2.sorted.bam | bcftools call -mv -Oz -o  nano/calls.vcf.gz
+
+bcftools norm -f K03455.fasta nano/calls.vcf.gz -Ob -o calls.norm.bcf
+
+# filter adjacent indels within 5bp
+bcftools filter --IndelGap 5 calls.norm.bcf -Ob -o calls.norm.flt-indels.bcf
+
+#now do consensus?
+cat K03455.fasta | bcftools consensus nano/calls.vcf.gz > consensus.fa
+
+
+
+
+
+#| bcftools call -mv -Oz -o /home/sdresche/Documents/nano/calls.vcf.gz
+bcftools index /home/sdresche/Documents/nano/calls.vcf.gz
+
+#bcftools mpileup -Ou -f "//home/sdresche/Documents/K03455.fasta" /home/sdresche/Documents/nano/BAMtoHXB2.sorted.bam 
+
+#| bcftools call -mv -Oz -o /home/sdresche/Documents/nano/calls.vcf.gz
+bcftools index /home/sdresche/Documents/nano/calls.vcf.gz
+bowtie2-inspect -s GCA_000001405.15_GRCh38_no_alt_analysis_set
+export BOWTIE2_INDEXES="/home/sdresche/Documents/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index"
+bowtie2-inspect -s GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bowtie_index
+samtools view -H /home/sdresche/Documents/nano/BAMtoHXB2.sorted.bam
+samtools view -b -S -o alignments/sim_reads_aligned.bam alignments/sim_reads_aligned.sam
+
+

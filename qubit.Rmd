@@ -1,0 +1,51 @@
+---
+title: "Qubit plot markdown"
+author: "Sara"
+date: "May 3, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+setwd("C:\\Users\\Sara\\Documents\\HHMI_projects\\Molecular_clock\\Analysis")
+library(ggplot2)
+library(magrittr)
+library(tidyverse)
+qubitdf=read.csv("qubitcsv.csv")
+qubitdf%<>%mutate(FragRep=paste(Fragment, Replicate, sep="_"))
+colnames(qubitdf)[1]="Sample"
+
+qubit1300=qubitdf[which(qubitdf$Sample=="VA 1300"),]
+
+qubit_all=qubitdf[which(qubitdf$Sample!="VA 1300"),]
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r plots, echo=FALSE}
+ggplot(qubit1300[1:6,], aes(fill=(FragRep), y=Undiluted.concentration, x=Sample)) + 
+  geom_bar(position="dodge", stat="identity") +  
+  theme_bw() + ylab("Concentration, ng/ul")
+
+ggplot(qubit1300[7:10,], aes(fill=(FragRep), y=Undiluted.concentration, x=Sample)) + 
+  geom_bar(position="dodge", stat="identity") +  
+  theme_bw() + ylab("Concentration, ng/ul")
+
+
+
+ggplot(qubit_all, aes(fill=(FragRep), y=Undiluted.concentration, x=Sample)) + 
+  geom_bar(position="dodge", stat="identity") + scale_fill_manual(values=c("#B2EBF2","#00BCD4", "#C8E6C9", "#66BB6A", "#FFF9C4", "#FFEB3B"))+ 
+  scale_y_log10() + theme_bw() + ylab("Concentration, ng/ul")
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

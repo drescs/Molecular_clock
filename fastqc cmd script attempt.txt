@@ -1,0 +1,25 @@
+java -Xmx250m -classpath .;./sam-1.103.jar;./jbzip2-0.9.jar uk.ac.babraham.FastQC.FastQCApplication %*
+Started analysis of ju.fq
+
+java -Xmx1024m -classpath .;./sam-1.103.jar;./jbzip2-0.9.jar uk.ac.bbsrc.babraham.FastQC.FastQCApplication -Dfastqc.output_dir=C:\\Users\\Sara\\Documents\\HHMI_projects\\Molecular_clock\\Analysis\\fastqc\\ X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls\\5_S5_L001_I1_001.fastq.gz
+
+
+
+fastqc -o C:/Users/Sara/Documents/HHMI_projects X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls\\5_S5_L001_I1_001.fastq.gz 
+
+
+filepath
+"X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls\\5_S5_L001_I1_001.fastq.gz"
+
+outfile path
+
+"C:\\Users\\Sara\\Documents\\HHMI_projects\\Molecular_clock\\Analysis\\fastqc"
+
+cd c:\users\sara\downloads\fastqc_v0.11.8\FastQC
+java -Xmx1024m -classpath .;./sam-1.103.jar;./jbzip2-0.9.jar uk.ac.babraham.FastQC.FastQCApplication --outdir=C:\\Users\\Sara\\Documents\\HHMI_projects\\Molecular_clock\\Analysis\\fastqc X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls\\5_S5_L001_I1_001.fastq.gz
+
+
+
+cd c:\users\sara\downloads\fastqc_v0.11.8\FastQC
+
+java -Xmx1024m -classpath -Dfastqc.output_dir=C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/fastqc uk.ac.bbsrc.babraham.FastQC.FastQCApplication .;./sam-1.103.jar;./jbzip2-0.9.jar -Dfastqc.output_dir=C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/fastqc uk.ac.bbsrc.babraham.FastQC.FastQCApplication X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls\\5_S5_L001_I1_001.fastq.gz

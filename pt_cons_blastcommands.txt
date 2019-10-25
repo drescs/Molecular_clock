@@ -1,0 +1,190 @@
+#!/bin/sh
+cd ~/JOLabShared/SaraDrescher/Molecular_clock/nano
+pandaseq -f 1_S1_L001_R1_001.fastq.gz -r 1_S1_L001_R2_001.fastq.gz -w pt_93_M6_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F1_R1_merged.fasta -out pt_93_M6_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 2_S2_L001_R1_001.fastq.gz -r 2_S2_L001_R2_001.fastq.gz -w pt_93_M6_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F1_R2_merged.fasta -out pt_93_M6_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 3_S3_L001_R1_001.fastq.gz -r 3_S3_L001_R2_001.fastq.gz -w pt_93_M6_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F2_R1_merged.fasta -out pt_93_M6_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 4_S4_L001_R1_001.fastq.gz -r 4_S4_L001_R2_001.fastq.gz -w pt_93_M6_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F2_R2_merged.fasta -out pt_93_M6_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 5_S5_L001_R1_001.fastq.gz -r 5_S5_L001_R2_001.fastq.gz -w pt_93_M6_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F3_R1_merged.fasta -out pt_93_M6_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 6_S6_L001_R1_001.fastq.gz -r 6_S6_L001_R2_001.fastq.gz -w pt_93_M6_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M6_F3_R2_merged.fasta -out pt_93_M6_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 7_S7_L001_R1_001.fastq.gz -r 7_S7_L001_R2_001.fastq.gz -w LAI_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query LAI_F1_R1_merged.fasta -out LAI_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 8_S8_L001_R1_001.fastq.gz -r 8_S8_L001_R2_001.fastq.gz -w LAI_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query LAI_F2_R1_merged.fasta -out LAI_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 9_S9_L001_R1_001.fastq.gz -r 9_S9_L001_R2_001.fastq.gz -w LAI_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query LAI_F3_R1_merged.fasta -out LAI_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 10_S10_L001_R1_001.fastq.gz -r 10_S10_L001_R2_001.fastq.gz -w LAI_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query LAI_F1_R2_merged.fasta -out LAI_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 11_S11_L001_R1_001.fastq.gz -r 11_S11_L001_R2_001.fastq.gz -w LAI_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query LAI_F2_R2_merged.fasta -out LAI_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 12_S12_L001_R1_001.fastq.gz -r 12_S12_L001_R2_001.fastq.gz -w LAI_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query LAI_F3_R2_merged.fasta -out LAI_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 13_S13_L001_R1_001.fastq.gz -r 13_S13_L001_R2_001.fastq.gz -w Q23_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query Q23_F1_R1_merged.fasta -out Q23_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 14_S14_L001_R1_001.fastq.gz -r 14_S14_L001_R2_001.fastq.gz -w Q23_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query Q23_F2_R1_merged.fasta -out Q23_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 15_S15_L001_R1_001.fastq.gz -r 15_S15_L001_R2_001.fastq.gz -w Q23_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query Q23_F3_R1_merged.fasta -out Q23_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 16_S16_L001_R1_001.fastq.gz -r 16_S16_L001_R2_001.fastq.gz -w Q23_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query Q23_F1_R2_merged.fasta -out Q23_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 17_S17_L001_R1_001.fastq.gz -r 17_S17_L001_R2_001.fastq.gz -w Q23_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query Q23_F2_R2_merged.fasta -out Q23_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 18_S18_L001_R1_001.fastq.gz -r 18_S18_L001_R2_001.fastq.gz -w Q23_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query Q23_F3_R2_merged.fasta -out Q23_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 19_S19_L001_R1_001.fastq.gz -r 19_S19_L001_R2_001.fastq.gz -w mix_1%_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F1_R1_merged.fasta -out mix_1%_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 20_S20_L001_R1_001.fastq.gz -r 20_S20_L001_R2_001.fastq.gz -w mix_1%_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F2_R1_merged.fasta -out mix_1%_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 21_S21_L001_R1_001.fastq.gz -r 21_S21_L001_R2_001.fastq.gz -w mix_1%_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F3_R1_merged.fasta -out mix_1%_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 22_S22_L001_R1_001.fastq.gz -r 22_S22_L001_R2_001.fastq.gz -w mix_1%_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F1_R2_merged.fasta -out mix_1%_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 23_S23_L001_R1_001.fastq.gz -r 23_S23_L001_R2_001.fastq.gz -w mix_1%_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F2_R2_merged.fasta -out mix_1%_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 24_S24_L001_R1_001.fastq.gz -r 24_S24_L001_R2_001.fastq.gz -w mix_1%_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query mix_1%_F3_R2_merged.fasta -out mix_1%_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 25_S25_L001_R1_001.fastq.gz -r 25_S25_L001_R2_001.fastq.gz -w Mix_5%_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F1_R1_merged.fasta -out Mix_5%_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 26_S26_L001_R1_001.fastq.gz -r 26_S26_L001_R2_001.fastq.gz -w Mix_5%_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F2_R1_merged.fasta -out Mix_5%_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 27_S27_L001_R1_001.fastq.gz -r 27_S27_L001_R2_001.fastq.gz -w Mix_5%_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F3_R1_merged.fasta -out Mix_5%_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 28_S28_L001_R1_001.fastq.gz -r 28_S28_L001_R2_001.fastq.gz -w Mix_5%_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F1_R2_merged.fasta -out Mix_5%_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 29_S29_L001_R1_001.fastq.gz -r 29_S29_L001_R2_001.fastq.gz -w Mix_5%_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F2_R2_merged.fasta -out Mix_5%_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 30_S30_L001_R1_001.fastq.gz -r 30_S30_L001_R2_001.fastq.gz -w Mix_5%_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_5%_F3_R2_merged.fasta -out Mix_5%_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 31_S31_L001_R1_001.fastq.gz -r 31_S31_L001_R2_001.fastq.gz -w Mix_10%_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F1_R1_merged.fasta -out Mix_10%_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 32_S32_L001_R1_001.fastq.gz -r 32_S32_L001_R2_001.fastq.gz -w Mix_10%_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F2_R1_merged.fasta -out Mix_10%_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 33_S33_L001_R1_001.fastq.gz -r 33_S33_L001_R2_001.fastq.gz -w Mix_10%_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F3_R1_merged.fasta -out Mix_10%_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 34_S34_L001_R1_001.fastq.gz -r 34_S34_L001_R2_001.fastq.gz -w Mix_10%_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F1_R2_merged.fasta -out Mix_10%_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 35_S35_L001_R1_001.fastq.gz -r 35_S35_L001_R2_001.fastq.gz -w Mix_10%_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F2_R2_merged.fasta -out Mix_10%_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 36_S36_L001_R1_001.fastq.gz -r 36_S36_L001_R2_001.fastq.gz -w Mix_10%_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query Mix_10%_F3_R2_merged.fasta -out Mix_10%_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 37_S37_L001_R1_001.fastq.gz -r 37_S37_L001_R2_001.fastq.gz -w pt_93_M12_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F1_R1_merged.fasta -out pt_93_M12_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 38_S38_L001_R1_001.fastq.gz -r 38_S38_L001_R2_001.fastq.gz -w pt_93_M12_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F1_R2_merged.fasta -out pt_93_M12_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 39_S39_L001_R1_001.fastq.gz -r 39_S39_L001_R2_001.fastq.gz -w pt_93_M12_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F2_R1_merged.fasta -out pt_93_M12_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 40_S40_L001_R1_001.fastq.gz -r 40_S40_L001_R2_001.fastq.gz -w pt_93_M12_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F2_R2_merged.fasta -out pt_93_M12_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 41_S41_L001_R1_001.fastq.gz -r 41_S41_L001_R2_001.fastq.gz -w pt_93_M12_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F3_R1_merged.fasta -out pt_93_M12_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 42_S42_L001_R1_001.fastq.gz -r 42_S42_L001_R2_001.fastq.gz -w pt_93_M12_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M12_F3_R2_merged.fasta -out pt_93_M12_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 43_S43_L001_R1_001.fastq.gz -r 43_S43_L001_R2_001.fastq.gz -w Pt_116_M9_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F1_R1_merged.fasta -out Pt_116_M9_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 44_S44_L001_R1_001.fastq.gz -r 44_S44_L001_R2_001.fastq.gz -w Pt_116_M9_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F1_R2_merged.fasta -out Pt_116_M9_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 45_S45_L001_R1_001.fastq.gz -r 45_S45_L001_R2_001.fastq.gz -w Pt_116_M9_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F2_R1_merged.fasta -out Pt_116_M9_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 46_S46_L001_R1_001.fastq.gz -r 46_S46_L001_R2_001.fastq.gz -w Pt_116_M9_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F2_R2_merged.fasta -out Pt_116_M9_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 47_S47_L001_R1_001.fastq.gz -r 47_S47_L001_R2_001.fastq.gz -w Pt_116_M9_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F3_R1_merged.fasta -out Pt_116_M9_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 48_S48_L001_R1_001.fastq.gz -r 48_S48_L001_R2_001.fastq.gz -w Pt_116_M9_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M9_F3_R2_merged.fasta -out Pt_116_M9_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 49_S49_L001_R1_001.fastq.gz -r 49_S49_L001_R2_001.fastq.gz -w pt_93_M18_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F1_R1_merged.fasta -out pt_93_M18_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 50_S50_L001_R1_001.fastq.gz -r 50_S50_L001_R2_001.fastq.gz -w pt_93_M18_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F1_R2_merged.fasta -out pt_93_M18_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 51_S51_L001_R1_001.fastq.gz -r 51_S51_L001_R2_001.fastq.gz -w pt_93_M18_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F2_R1_merged.fasta -out pt_93_M18_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 52_S52_L001_R1_001.fastq.gz -r 52_S52_L001_R2_001.fastq.gz -w pt_93_M18_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F2_R2_merged.fasta -out pt_93_M18_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 53_S53_L001_R1_001.fastq.gz -r 53_S53_L001_R2_001.fastq.gz -w pt_93_M18_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F3_R1_merged.fasta -out pt_93_M18_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 54_S54_L001_R1_001.fastq.gz -r 54_S54_L001_R2_001.fastq.gz -w pt_93_M18_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_93_M18_F3_R2_merged.fasta -out pt_93_M18_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 55_S55_L001_R1_001.fastq.gz -r 55_S55_L001_R2_001.fastq.gz -w Pt_116_M15_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M15_F1_R1_merged.fasta -out Pt_116_M15_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 56_S56_L001_R1_001.fastq.gz -r 56_S56_L001_R2_001.fastq.gz -w pt_116_M15_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M15_F1_R2_merged.fasta -out pt_116_M15_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 57_S57_L001_R1_001.fastq.gz -r 57_S57_L001_R2_001.fastq.gz -w Pt_116_M15_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M15_F2_R1_merged.fasta -out Pt_116_M15_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 58_S58_L001_R1_001.fastq.gz -r 58_S58_L001_R2_001.fastq.gz -w pt_116_M15_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M15_F2_R2_merged.fasta -out pt_116_M15_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 59_S59_L001_R1_001.fastq.gz -r 59_S59_L001_R2_001.fastq.gz -w Pt_116_M15_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query Pt_116_M15_F3_R1_merged.fasta -out Pt_116_M15_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 60_S60_L001_R1_001.fastq.gz -r 60_S60_L001_R2_001.fastq.gz -w pt_116_M15_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M15_F3_R2_merged.fasta -out pt_116_M15_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 61_S61_L001_R1_001.fastq.gz -r 61_S61_L001_R2_001.fastq.gz -w pt_127_M3_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F1_R1_merged.fasta -out pt_127_M3_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 62_S62_L001_R1_001.fastq.gz -r 62_S62_L001_R2_001.fastq.gz -w pt_127_M3_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F1_R2_merged.fasta -out pt_127_M3_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 63_S63_L001_R1_001.fastq.gz -r 63_S63_L001_R2_001.fastq.gz -w pt_127_M3_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F2_R1_merged.fasta -out pt_127_M3_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 64_S64_L001_R1_001.fastq.gz -r 64_S64_L001_R2_001.fastq.gz -w pt_127_M3_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F2_R2_merged.fasta -out pt_127_M3_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 65_S65_L001_R1_001.fastq.gz -r 65_S65_L001_R2_001.fastq.gz -w pt_127_M3_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F3_R1_merged.fasta -out pt_127_M3_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 66_S66_L001_R1_001.fastq.gz -r 66_S66_L001_R2_001.fastq.gz -w pt_127_M3_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M3_F3_R2_merged.fasta -out pt_127_M3_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 67_S67_L001_R1_001.fastq.gz -r 67_S67_L001_R2_001.fastq.gz -w VA_1300_F1_25_cycles_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_25_cycles_R1_merged.fasta -out VA_1300_F1_25_cycles_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 68_S68_L001_R1_001.fastq.gz -r 68_S68_L001_R2_001.fastq.gz -w VA_1300_F1_30_cycles_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_30_cycles_R1_merged.fasta -out VA_1300_F1_30_cycles_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 69_S69_L001_R1_001.fastq.gz -r 69_S69_L001_R2_001.fastq.gz -w VA_1300_F1_35-pre_gel_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_35-pre_gel_R1_merged.fasta -out VA_1300_F1_35-pre_gel_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 70_S70_L001_R1_001.fastq.gz -r 70_S70_L001_R2_001.fastq.gz -w VA_1300_F1_35-pre_gel_R2_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_35-pre_gel_R2_merged.fasta -out VA_1300_F1_35-pre_gel_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 71_S71_L001_R1_001.fastq.gz -r 71_S71_L001_R2_001.fastq.gz -w pt_127_M9_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F1_R1_merged.fasta -out pt_127_M9_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 72_S72_L001_R1_001.fastq.gz -r 72_S72_L001_R2_001.fastq.gz -w pt_127_M9_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F1_R2_merged.fasta -out pt_127_M9_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 73_S73_L001_R1_001.fastq.gz -r 73_S73_L001_R2_001.fastq.gz -w pt_127_M9_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F2_R1_merged.fasta -out pt_127_M9_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 74_S74_L001_R1_001.fastq.gz -r 74_S74_L001_R2_001.fastq.gz -w pt_127_M9_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F2_R2_merged.fasta -out pt_127_M9_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 75_S75_L001_R1_001.fastq.gz -r 75_S75_L001_R2_001.fastq.gz -w pt_127_M9_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F3_R1_merged.fasta -out pt_127_M9_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 76_S76_L001_R1_001.fastq.gz -r 76_S76_L001_R2_001.fastq.gz -w pt_127_M9_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M9_F3_R2_merged.fasta -out pt_127_M9_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 77_S77_L001_R1_001.fastq.gz -r 77_S77_L001_R2_001.fastq.gz -w VA_1300_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F2_R1_merged.fasta -out VA_1300_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 78_S78_L001_R1_001.fastq.gz -r 78_S78_L001_R2_001.fastq.gz -w VA_1300_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F2_R2_merged.fasta -out VA_1300_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 79_S79_L001_R1_001.fastq.gz -r 79_S79_L001_R2_001.fastq.gz -w VA_1300_F3-20_15_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F3-20_15_R1_merged.fasta -out VA_1300_F3-20_15_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 80_S80_L001_R1_001.fastq.gz -r 80_S80_L001_R2_001.fastq.gz -w VA_1300_F3-25_10_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F3-25_10_R1_merged.fasta -out VA_1300_F3-25_10_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 81_S81_L001_R1_001.fastq.gz -r 81_S81_L001_R2_001.fastq.gz -w VA_1300_F1_35extract_R1_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_35extract_R1_merged.fasta -out VA_1300_F1_35extract_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 82_S82_L001_R1_001.fastq.gz -r 82_S82_L001_R2_001.fastq.gz -w VA_1300_F1_35extract_R2_merged.fasta
+blastn -db pt_ref_DB -query VA_1300_F1_35extract_R2_merged.fasta -out VA_1300_F1_35extract_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 83_S83_L001_R1_001.fastq.gz -r 83_S83_L001_R2_001.fastq.gz -w pt_116_M24_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F1_R1_merged.fasta -out pt_116_M24_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 84_S84_L001_R1_001.fastq.gz -r 84_S84_L001_R2_001.fastq.gz -w pt_116_M24_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F1_R2_merged.fasta -out pt_116_M24_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 85_S85_L001_R1_001.fastq.gz -r 85_S85_L001_R2_001.fastq.gz -w pt_116_M24_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F2_R1_merged.fasta -out pt_116_M24_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 86_S86_L001_R1_001.fastq.gz -r 86_S86_L001_R2_001.fastq.gz -w pt_116_M24_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F2_R2_merged.fasta -out pt_116_M24_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 87_S87_L001_R1_001.fastq.gz -r 87_S87_L001_R2_001.fastq.gz -w pt_116_M24_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F3_R1_merged.fasta -out pt_116_M24_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 88_S88_L001_R1_001.fastq.gz -r 88_S88_L001_R2_001.fastq.gz -w pt_116_M24_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_116_M24_F3_R2_merged.fasta -out pt_116_M24_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 89_S89_L001_R1_001.fastq.gz -r 89_S89_L001_R2_001.fastq.gz -w pt_127_M18_F1_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F1_R1_merged.fasta -out pt_127_M18_F1_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 90_S90_L001_R1_001.fastq.gz -r 90_S90_L001_R2_001.fastq.gz -w pt_127_M18_F1_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F1_R2_merged.fasta -out pt_127_M18_F1_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 91_S91_L001_R1_001.fastq.gz -r 91_S91_L001_R2_001.fastq.gz -w pt_127_M18_F2_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F2_R1_merged.fasta -out pt_127_M18_F2_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 92_S92_L001_R1_001.fastq.gz -r 92_S92_L001_R2_001.fastq.gz -w pt_127_M18_F2_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F2_R2_merged.fasta -out pt_127_M18_F2_R2_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 93_S93_L001_R1_001.fastq.gz -r 93_S93_L001_R2_001.fastq.gz -w pt_127_M18_F3_R1_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F3_R1_merged.fasta -out pt_127_M18_F3_R1_blastout.txt -outfmt 6 -max_target_seqs 1
+pandaseq -f 94_S94_L001_R1_001.fastq.gz -r 94_S94_L001_R2_001.fastq.gz -w pt_127_M18_F3_R2_merged.fasta
+blastn -db pt_ref_DB -query pt_127_M18_F3_R2_merged.fasta -out pt_127_M18_F3_R2_blastout.txt -outfmt 6 -max_target_seqs 1
