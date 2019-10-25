@@ -17,9 +17,9 @@ Step 3: Calculate APD You'll get several files from each sample you put through 
 Step: 4 To check that all reads with a particular barcode are truly from the sample in question and not contamination from another sample in the batch, we put all of the consensus sequence that came out of hivmmer (they are hidden in that AAVF file) and make a local blast database with them. Then we reblast all the sequences against these and remove any that align to anythign but the correct consensus. Step 1 is to make a the blast database--that's in make consensus fasta.R. This makes the blast database and then writes the blast commands to a text file. A tricky bit is that the blast software (from BLAST+) requires you to first merge the paired-end reads, so that is in there too. Set the blast to allow a maximum of one (the best) match.
 
 If like me, you are running R studio on windows, it will write th carriage returns differently than linux. Thus, before running the commands you need to run:
-'''
+```
 awk '{ sub("\r$", ""); print }' Commands.txt> Commands.sh
-'''
+```
 (replace Commands.txt with whatever file contains your blast commands).
 
 Step 5: After you've blasted everything on the commands line, we need to analyze the output. That's in the second half of make consensus fasta.R. It will look at what sequence each read aligns to best, and pull out the identifiers of th reads that aligned to the correct sequences (and the correct fragment). This will get all mixed up for controls that use mixtures of pure strains--but we know that and can ignore that output. 
