@@ -14,9 +14,21 @@ Right now it requires going back and forth between R and console. Probably there
 #Step 1: Build hivmmer index for HIV sequences/areas of interest: using make_ref_alignments.fasta 
 
 #Step 2: run hivmmer on the files from miseq (needs two files, one forward and one reverse, for each)--can use HIVMMER analysis location 2 to write this code in bulk if it's helpful, but probably it won't be unless all your sample names are stored just like mine. (CSV with sample number in one column, sample name in another). The files are input using the original name (e.g., 1_S1_001_L001_R1_01.fastq.gz, but the results use the sample name instead, e.g., pt93_T1_F1_R1). That's the main helpful purpose of writing the code in R. 
-Write HIVMMER command also makes an object called "outputfiles" which is the list (well, vector in R!) of output files you will want to use later, IN ORDER BY SAMPLE NUMBER. The reason that last is important is if you just grab all the files in the results directory with the right file ending, they won't be in order by sample number (if you sort by time changed they may be out of order if you ran it on multiple nodes at once). The sample number is used later in the code so you'll want to use the script to write the vector of output files.
+Write HIVMMER command also makes an object called "outputfiles" which is the list (well, vector in R!) of output files you will want to use later, IN ORDER BY SAMPLE NUMBER. The reason that last is important is if you just grab all the files in the results directory with the right file ending, they won't be in order by sample number (if you sort by time changed they may be out of order if you ran it on multiple nodes at once). The sample number is used later in the code so you'll want to use the script to write the vector of output files, or find a different method to make sure you get the correct fragment.
+
+The basic command looks like this:
+```
+hivmmer --id /Molecular_clock/second_run/results/pt93_F1_R1_M18.18 --fq1 mypath/18_S18_L001_R1_001.fastq.gz --fq2 mypath/18_S18_L001_R2_001.fastq.gz --ref GagACD.trimmed.aa.hmm --region int
+```
+The reference used will be either GagACD.trimmed.aa.hmm (for fragment F1) or PolACD.trimmed.aa.hmm (for fragment F2 or F3) but for region we always specify 'int'--it's a quirk of HIVMMER but it does nothing with that info and specifying gag won't work, specifying pol will show us only the sites in pol relative to resistance testing, but both gag and pol work with int specified.
 
 #Step 3: Calculate APD. You'll get several files from each sample you put through HIVMMER. The file of interest is samplename.hmmsearch2.aavf. The aavf files is in a weird format and you'll want to parse that--use an AAVF_parser. The most current is AAVF_parser_3rd_codon. (There is a bit of code to source and call this in write_HIVMMER_commands). It calculates average pairwise distance (APD) (and a few other metrics) using the third codon position only--so it looks at quasi-synonymous changes, consistant with the method used by Puller et all to calculate APD. Another version, AAVF_synonymous, will give you something quite similar but using synonymous codons (compared to reference). The difference is subtle and likely doesn't matter but it's important to know which you used.
+
+```
+AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, coverage_min=5000) {
+...}
+```
+You do want to be sure you are specifying fragment each time or it will assume all your samples are in F1. The variant calling and coverage threshholds default to 0.01 and 5000, respectively, but it should be easy to change those.
 
 #Step: 4 To check that all reads with a particular barcode are truly from the sample in question and not contamination from another sample in the batch, we put all of the consensus sequence that came out of hivmmer (they are hidden in that AAVF file) and make a local blast database with them. Then we reblast all the sequences against these and remove any that align to anythign but the correct consensus. =First you need to make a the blast database--that's in make consensus fasta.R. This makes the blast database and then writes the blast commands to a text file. A tricky bit is that the blast software (from BLAST+) requires you to first merge the paired-end reads, so that is in there too. Set the blast to allow a maximum of one (the best) match.
 
