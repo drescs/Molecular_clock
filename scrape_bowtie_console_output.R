@@ -1,3 +1,7 @@
+#!/bin/sh
+#echo sample57
+
+#bowtie2 -q --local -x  HXB2 -1 /home/sdresche/Documents/molecular_clock/nano/57_S57_L001_R1_001.fastq.gz -2 /home/sdresche/Documents/molecular_clock/nano/57_S57_L001_R2_001.fastq.gz -S /home/sdresche/JOLabShared/SaraDrescher/bowtie_output/HXB2_sample_57.sam
 
 #see if I can pull the useful info out of the bowtie console output
 

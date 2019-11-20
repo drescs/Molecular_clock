@@ -6,11 +6,6 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   library(tidyverse)
   library(Biostrings)
   library(seqinr)
-  consensusfilepath="O:/Documents/molecular clock/HMsample05.hmmsearch2.ref.consensus.fasta"
-  coverage_min=5000
-  #codon_variant_cov_min=50
-  codon_variant_frac_min=0.01
-  fragment="F1"
   my_output_vector=vector()
   AAVF_metadata=read_lines(filepath, n_max=10)
   AAVF_raw=read.table(filepath, sep="\t", header=FALSE)
@@ -72,23 +67,32 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   Variants=separate(Variants, codon_info, c("Codon", "Codon_coverage", "Codon_frequency"), sep="_")
   Variants=Variants[which(Variants$Codon!="NA"),]
   
+  #Codon_frequency=how often a codon was seen out of the total number of reads that covered that position
+  
   Variants$Codon_coverage=as.numeric(Variants$Codon_coverage)
   Variants%<>% group_by(POS, ALT) %>% mutate(dominant_allele_coverage=max(Codon_coverage,na.rm=T))
+#here I want to get a nucleotide consensus sequence--will use this for making a blast database to check for cross-contamination
+  #I'll use the ref AA and then the most common codon for that AA
+  Variants$REF=as.character(Variants$REF)
+  Variants$ALT=as.character(Variants$ALT)
   get_nt_consensus=Variants[which(Variants$REF==Variants$ALT),]
   get_nt_consensus=get_nt_consensus[which(get_nt_consensus$Codon_coverage==get_nt_consensus$dominant_allele_coverage),]
+  #make sure it's in order of position
   get_nt_consensus=get_nt_consensus[order(get_nt_consensus$POS),]
+  #squish them all into one string
   nt_consensus=paste(get_nt_consensus$Codon, collapse="")
   
+  #now to look at third codon positions only--separate our codons into nucleotides
   Variants=separate(Variants, Codon, c("First", "Second", "Third"), sep=c(1,2))
   Variants$Codon_coverage=as.numeric(Variants$Codon_coverage)
   Variants$Codon_frequency=as.numeric(Variants$Codon_frequency)
 
+  #looking at the third codon in a position, no matter what the amino acid is; 
+  #for example, reads of aaa and cta will be counted together
   Variants%<>% group_by(POS, Third) %>% mutate(third_nuc_sum=sum(Codon_coverage, na.rm=T))
   
   Variants%<>%mutate(freq_in_syn=Codon_coverage/Syn_Coverage)
   Variants%<>%mutate(freq_syn_dom=dominant_allele_coverage/Syn_Coverage)
-  
-
   
   #Select only those that pass the filter
   Pass_vars=Variants[which(Variants$FILTER=="PASS"),]
@@ -96,6 +100,8 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   Pass_vars%<>% group_by(POS) %>% mutate(Pass_denom=sum(Codon_coverage, na.rm=T))
   
   #just want one row for each nuc at the third position
+  #note this part just ignores the amino acids--it's as if we never translated it 
+  #and only knew the nucleotides
   third_pass_vars=select(Pass_vars, POS,COVERAGE,Third, third_nuc_sum, Pass_denom)
   third_pass_vars=unique(third_pass_vars)
   third_pass_vars %<>% mutate(third_freq=third_nuc_sum/Pass_denom)
@@ -105,9 +111,13 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   third_pass_vars%<>%mutate(contribution=third_freq*(1-third_freq)*to_use)
   #Now only those that are synonymous
   #need to know number of sites to divde by
+  #note this number is the number of amino acids, so equal to the number of 3rd codon positions
   covered_sites=length(unique(third_pass_vars$POS))
-  
   APD=sum(third_pass_vars$contribution)/covered_sites
+  
+  #my_output_vector is what the function will return when you run it. 
+  #Any info we'll want in the end needs to go in there.
+  
   my_output_vector[2]=APD
   
 
@@ -116,10 +126,12 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   POS_COVERAGE=unique(AAVF_raw[,c("POS", "COVERAGE", "REF")])
   POS_COVERAGE%<>%arrange(POS)
   POS_COVERAGE$REF=as.character(POS_COVERAGE$REF)
-  
   #plot coverage by positionls
+  
   covplot=ggplot(POS_COVERAGE, aes(y=COVERAGE, x=POS)) + 
-    geom_bar(position="dodge", stat="identity") +  
+    geom_bar(position="dodge", stat="identity") + 
+    ggtitle(sample_name) +
+    geom_hline(yintercept=coverage_min, color="red", linetype="dashed") +
     theme_bw()
   covplot
   consensus=paste(POS_COVERAGE$REF, collapse="")
@@ -143,7 +155,7 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   
   
   check_vector=check_continuous(POS_COVERAGE, coverage_min)
-  my_output_vector=c(my_output_vector)
+  my_output_vector=c(my_output_vector, check_vector)
   
   #translate those start and end codons to the corresponding HXB2 nucleotide start and stop positions
   #this is important for plugging them into Neher's clock, found at:
@@ -190,5 +202,5 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
     geom_bar(position="dodge", stat="identity") +  
     theme_bw()
   
-  return (my_output_vector)
+  return(list(covplot, my_output_vector))
 }

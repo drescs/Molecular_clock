@@ -50,7 +50,7 @@ Variants$ACC6%<>%as.numeric()
 
 Variants%<>% mutate(Syn_Coverage=rowSums(Variants[,c("ACC1", "ACC2", "ACC3", "ACC4", "ACC5", "ACC6")],  na.rm=T))
 
-
+#syn_coverage= how many times we saw a particular amino acid at a particular site
 
 #Need to restructure this data and I'm getting annyoed messing around with reshape and melt and whatnot. Stata would do an awesome job here but whatever.
 #I can just make 6 copies of this data frame, each including only the three relevant end columns, then stack them
@@ -70,9 +70,12 @@ Variants %<>% gather(key=codon_number, value=codon_info, Codon_1, Codon_2, Codon
 Variants=separate(Variants, codon_info, c("Codon", "Codon_coverage", "Codon_frequency"), sep="_")
 Variants=Variants[which(Variants$Codon!="NA"),]
 
+#Codon_frequency=how often a codon was seen out of the total number of reads that covered that position
+
 Variants$Codon_coverage=as.numeric(Variants$Codon_coverage)
 Variants$Codon_frequency=as.numeric(Variants$Codon_frequency)
 Variants%<>% group_by(POS, ALT) %>% mutate(dominant_allele_coverage=max(Codon_coverage,na.rm=T))
+
 Variants%<>%mutate(freq_in_syn=Codon_coverage/Syn_Coverage)
 Variants%<>%mutate(freq_syn_dom=dominant_allele_coverage/Syn_Coverage)
 
@@ -86,7 +89,7 @@ Pass_vars%<>%mutate(contribution=freq_in_syn*(1-freq_in_syn)*to_use)
 Syn_pass_vars=Pass_vars[which(Pass_vars$REF==Pass_vars$ALT),]
 #need to know number of sites to divde by
 covered_sites=length(unique(Syn_pass_vars$POS))
-
+#note this number is the number of amino acids, so equal to the number of 3rd codon positions
 APD=sum(Syn_pass_vars$contribution)/covered_sites
 
 
@@ -161,8 +164,7 @@ print(HXB_nt_start)
 print(HXB_nt_end)
 print(APD)
 
-#So need to determine when to include a variant in my calculation and how to calculate "diversity"--will we use fraction of a particular codon/total codons for that AA?
-#seems best, will need to add this up as we get total coverage, which includes other AA variants 
+
 
 myRef=read.fasta(file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/HXB2_pol_aa.fasta")
 
