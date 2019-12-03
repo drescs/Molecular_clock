@@ -7,10 +7,14 @@ library(tidyverse)
 #load the consensus sequences that are in your ouput from the AAVF parser
   my_cons=read.csv("C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/third_output_nano_unfiltered.csv")
   my_cons$sample_num=my_cons$X
+  
 
 #make a fasta file from these that will serve as your local blast database 
+  LAIQ23=read.fasta("O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano_mod.fasta")
+  write.fasta(LAIQ23, names(LAIQ23), open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano.fasta", as.string=TRUE) 
+  
   write.fasta(as.list(my_cons$consensus), my_cons$Name, open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano.fasta", as.string=TRUE)
-  write.fasta(as.list(my_cons$consensus[-c(19:36)]), my_cons$Name[-c(19:36)], open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano_mod.fasta", as.string=TRUE)
+  write.fasta(as.list(my_cons$consensus[-c(19:36)]), my_cons$Name[-c(19:36)], open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano.fasta", as.string=TRUE)
 #make the blast database in linux:
 # makeblastdb -in ~/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano_mod.fasta -dbtype nucl -parse_seqids -out pt_ref_DB2mod
   
@@ -31,7 +35,7 @@ library(tidyverse)
     file1=paste0( sample_num, "_S", sample_num, "_L001_R1_001.fastq.gz")
     file2=paste0( sample_num, "_S", sample_num, "_L001_R2_001.fastq.gz")
     command1=paste0("pandaseq -f ", path, file1," -r ",path, file2," -w ", sample_name, "_merged.fasta")
-    command2=paste0("blastn -db  /home/sdresche/JOLabShared/SaraDrescher/Molecular_clock/LAI_Q23_DB/LAI_Q23_DB -query ", sample_name, "_merged.fasta -out ",sample_name,"_blastout.txt -outfmt 6 -max_target_seqs 1")
+    command2=paste0("blastn -db  /home/sdresche/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_DB2mod -query ", sample_name, "_merged.fasta -out ",sample_name,"_blastout.txt -outfmt 6 -max_target_seqs 1")
     output=paste0(sample_name,"_blastout.txt")
     outputfiles=c(outputfiles,output)
     commands=c(commands, command1, command2)
@@ -102,7 +106,7 @@ x %<>% separate(Frag, c( "Frag", "evenmore"), sep=("-"), remove=FALSE, fill="rig
 # x %<>% separate(rest, c("Rep", "Time"), sep="_[T,M]", fill="right")
 # x %<>% separate(Pt_name, c("Pt_name", "Gel_extracted"), sep="gel", fill="right")
 # x %<>% separate(Pt_name, c("percent", "Pt_name"), sep="%", fill="left")
-good_seqs=x[which(x$Pt_name==mycols$Pt_name[i] & x$Frag==mycols$Frag[i]),]
+good_seqs=x[which(x$Pt_name==mycols$Pt_name[i]),]
 reverses=readFastq((paste0(path, as.character(files_list$reverse_list[i]))))
 forwards=readFastq((paste0(path, as.character(files_list$forward_list[i]))))
 mynames <-  as.character(ShortRead::id(forwards))

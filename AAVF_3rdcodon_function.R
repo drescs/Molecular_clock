@@ -155,7 +155,7 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   
   
   check_vector=check_continuous(POS_COVERAGE, coverage_min)
-  my_output_vector=c(my_output_vector, check_vector)
+
   
   #translate those start and end codons to the corresponding HXB2 nucleotide start and stop positions
   #this is important for plugging them into Neher's clock, found at:
@@ -195,7 +195,8 @@ AAVF.3rdcodon=function(filepath, fragment="F1", codon_variant_frac_min=0.01, cov
   print(HXB_nt_start)
   print(HXB_nt_end)
   print(APD)
-  
+  my_output_vector=c(my_output_vector, HXB2aastart, HXB2aastart+check_vector[3])
+  my_output_vector=c(my_output_vector, check_vector[3:4])
   my_output_vector=c(my_output_vector, HXB_nt_start, HXB_nt_end, nt_consensus, fragment)
   #plot coverage by positionls
   covplot=ggplot(POS_COVERAGE, aes(y=COVERAGE, x=POS)) + 
