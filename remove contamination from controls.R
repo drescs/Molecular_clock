@@ -15,7 +15,9 @@ library(tidyverse)
   
   write.fasta(as.list(my_cons$consensus), my_cons$Name, open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano.fasta", as.string=TRUE)
   write.fasta(as.list(my_cons$consensus[-c(19:36)]), my_cons$Name[-c(19:36)], open = "w", file.out="O:/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano.fasta", as.string=TRUE)
-#make the blast database in linux:
+#I hand cut and pasted the Q23 and LAI sequences into the fasta that I wrote above, which contains consensus sequences from all patients but NOT any of the pure strain or control mixes.
+  
+  #make the blast database in linux:
 # makeblastdb -in ~/JOLabShared/SaraDrescher/Molecular_clock/nano/pt_ref_sequences_nano_mod.fasta -dbtype nucl -parse_seqids -out pt_ref_DB2mod
   
 #write the commands you will use to merge your files and  then blast them against your local database

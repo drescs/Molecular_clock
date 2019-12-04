@@ -2,7 +2,7 @@
 library(stringr)
 library(tidyverse)
 library(magrittr)
-sample_names=read.csv("O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_nano.csv", stringsAsFactors = FALSE)
+sample_names=read.csv("O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_second_run.csv", stringsAsFactors = FALSE)
 
 sample_names%<>%mutate(fragment=unlist(strsplit(Sample_Name, split="_"))[grepl("F.", unlist(strsplit(Sample_Name, split="_")))])
 sample_names %<>% separate(fragment, c("fragment", "extra"), sep="-")
@@ -39,7 +39,7 @@ write_HIVMMER_Command=function(sample_num, output_name=default_name, expname="",
 
 #hivmmer --id /home/sdresche/JOLabShared/SaraDrescher/p1_4_f1_Neher --fq1 /home/sdresche/JOLabShared/SaraDrescher/testout1.fastq --fq2  /home/sdresche/JOLabShared/SaraDrescher/testout2.fastq --ref GagACD.trimmed.aa.hmm --region int
 
-write_HIVMMER_Command(c(7:18), datapath=mypath, expname="nano/filtered", sample_namesdb=sample_names)
+write_HIVMMER_Command(1:length(sample_names$Sample_name), datapath=mypath, expname="nano/filtered", sample_namesdb=sample_names)
 
 fileConn<-file("O:/JOLabShared/SaraDrescher/Code/HIVMMERCommands_filtered_cons.txt")
 writeLines(c(noquote("#!/bin/sh"), noquote("cd /home/sdresche/JOLabShared/SaraDrescher/Molecular_clock"), write_HIVMMER_Command(7:18, expname="nano/filtered", sample_namesdb=sample_names, datapath=mypath)), fileConn)
@@ -67,7 +67,7 @@ write_HIVMMER_outfiles=function(sample_num, output_name=default_name, expname=""
   return(outvector)
 }
 
-out_files_list=write_HIVMMER_outfiles(1:length(sample_names$Sample_Name),datapath=mypath,expname="nano", sample_namesdb=sample_names)
+out_files_list=write_HIVMMER_outfiles(1:length(sample_names$Sample_Name),datapath=mypath,expname="second_run", sample_namesdb=sample_names)
 
 #sample_namesdb=sample_names
 
@@ -86,7 +86,7 @@ out_files_list=write_HIVMMER_outfiles(1:length(sample_names$Sample_Name),datapat
 # out_files_list=c(out_files_list, my_outs)
 # }
 
-sample_names=read.csv("O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_nano.csv", stringsAsFactors = FALSE)
+sample_names=read.csv("O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_second_run.csv", stringsAsFactors = FALSE)
 
 sample_names%<>%mutate(fragment=unlist(strsplit(Sample_Name, split="_"))[grepl("F.", unlist(strsplit(Sample_Name, split="_")))])
 
@@ -114,14 +114,14 @@ source("C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/Code_for_
 
 
 #to make plots
-pdf(file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/coverage_plots_nano_filtered_controls.pdf")
+pdf(file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/coverage_plots_nano_filtered_05.pdf")
 coverage_min=5000
 third_output=vector()
 plots_list=list()
 for (i in 7:18){
   fragment=sample_names$fragment[i]
   filepath=paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/", out_files_list[i])
-  x=AAVF.3rdcodon(filepath, fragment=fragment, codon_variant_frac_min = 0.12)
+  x=AAVF.3rdcodon(filepath, fragment=fragment, codon_variant_frac_min = 0.05)
   atitle=paste0(sample_names$Sample_Name[i], " APD= ", round(as.numeric(x[[2]][2]), 4))
   print(x[[1]] + ggtitle(atitle) + geom_hline(yintercept=5000, color="red", linetype="dashed"))
   third_output=rbind(third_output, x[[2]])
@@ -133,16 +133,21 @@ dev.off()
 third_output=as.data.frame(third_output)
 
 colnames(third_output)=c("Name", "APD", "AAstart", "AAend", "Good AAs", "Seq continuous", "HXB2nt_start", "HXB2nt_end", "consensus", "Fragment")
-write.csv(third_output, file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/third_output_nano_filtered_control12.csv")
+write.csv(third_output, file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/third_output_nano_filtered_5.csv")
 
 
 
 #Same thing without the plots:
+
+#note for nano/filtered we don't want to run the controls, which are  sample numbers 7-35. 
+#It will break if you run them as a few failed in HIVMMER and we won't use that info anyway.
+#for second_run/filtered leave out 1-15
+
 third_output=vector()
-for (i in 7:18){
+for (i in c(17:96)){
   fragment=sample_names$fragment[i]
   filepath=paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/", out_files_list[i])
-  x=AAVF.3rdcodon(filepath, fragment=fragment, codon_variant_frac_min=0.14)
+  x=AAVF.3rdcodon(filepath, fragment=fragment, codon_variant_frac_min=0.10)
   atitle=paste0(sample_names$Sample_Name[i], " APD= ", round(as.numeric(x[[2]][2]), 4))
   myvector=c(x[[2]], i)
   third_output=rbind(third_output, myvector)
@@ -156,6 +161,6 @@ for (i in 7:18){
 third_output=as.data.frame(third_output)
 
 colnames(third_output)=c("Name", "APD", "AAstart", "AAend", "Good AAs", "Seq continuous", "HXB2nt_start", "HXB2nt_end", "consensus", "Fragment", "sample_num")
-write.csv(third_output, file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/third_output_nano_controls_14.csv")
+write.csv(third_output, file="C:/Users/Sara/Documents/HHMI_projects/Molecular_clock/Analysis/third_output_2nd_10.csv")
 
 
