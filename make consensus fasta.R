@@ -39,11 +39,7 @@ for (i in (1:length(cons_names[,1]))){
 }
 
 
-
-
 files_list=as.data.frame(cbind(cons_names[,2], as.character(cons_names[,1]), forward_list, reverse_list))
-
-write.csv(files_list, "O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_and_file_names.csv")
 #write these commands to a text file
 write_lines(c(noquote("#!/bin/sh"), noquote("cd ~/JOLabShared/SaraDrescher/Molecular_clock/second_run"), commands), "O:/JOLabShared/SaraDrescher/Code/pt_cons_blastcommands.txt")
 
@@ -73,6 +69,9 @@ mycols %<>% separate(Frag, c( "Frag", "more"), sep=("_"), remove=FALSE, fill="ri
 mycols %<>% separate(Frag, c( "Frag", "evenmore"), sep=("-"), remove=FALSE, fill="right")
 mycols%<>%select(V1, V2, Frag, Month, Pt_name, Rep, forward_list, reverse_list)
 
+
+
+#awkwardly here will still need to comment out some of the text parsing based on what run we are using.
 totals=vector()
 not_contam=vector()
 for (i in 1:94){
@@ -117,9 +116,9 @@ for (i in 1:94){
   good_rev_indices=which(mynames_r%in%good_seq_ids)
   totals=c(totals, length(forwards))
   not_contam=c(not_contam, length(good_for_indices))
-  #forwards1 <- forwards[good_for_indices]
-  #reverses1 <- reverses[good_rev_indices]
-  #writeFastq(forwards1, paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/second_run/filtered/filtered_", as.character(files_list$forward_list[i])), full=TRUE)
-  #writeFastq(reverses1, paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/second_run/filtered/filtered_", as.character(files_list$reverse_list[i])), full=TRUE)
+  forwards1 <- forwards[good_for_indices]
+  reverses1 <- reverses[good_rev_indices]
+  writeFastq(forwards1, paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/second_run/filtered/filtered_", as.character(files_list$forward_list[i])), full=TRUE)
+  writeFastq(reverses1, paste0("O:/JOLabShared/SaraDrescher/Molecular_clock/second_run/filtered/filtered_", as.character(files_list$reverse_list[i])), full=TRUE)
 }
 
