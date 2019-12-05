@@ -2,10 +2,13 @@
 library(stringr)
 library(tidyverse)
 library(magrittr)
+#change this to be appropriate for the experiment you are running
 sample_names=read.csv("O:/JOLabShared/SaraDrescher/Molecular_clock/sample_names_second_run.csv", stringsAsFactors = FALSE)
 
+#these lines pull out the fragment for each sample
 sample_names%<>%mutate(fragment=unlist(strsplit(Sample_Name, split="_"))[grepl("F.", unlist(strsplit(Sample_Name, split="_")))])
 sample_names %<>% separate(fragment, c("fragment", "extra"), sep="-")
+
 #this pulls the particular fragment out of the sample name
 #nano data path: X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\190503_M03100_0427_000000000-CG8MD\\Data\\Intensities\\BaseCalls"
 #second run data path: X:\\fast\\bloom_j\\SR\\ngs\\illumina\\sdresche\\191014_M04866_0296_000000000-CM883\\Data\\Intensities\\BaseCalls"
@@ -37,12 +40,11 @@ write_HIVMMER_Command=function(sample_num, output_name=default_name, expname="",
   noquote(mycommand)
 }
 
-#hivmmer --id /home/sdresche/JOLabShared/SaraDrescher/p1_4_f1_Neher --fq1 /home/sdresche/JOLabShared/SaraDrescher/testout1.fastq --fq2  /home/sdresche/JOLabShared/SaraDrescher/testout2.fastq --ref GagACD.trimmed.aa.hmm --region int
 
-write_HIVMMER_Command(1:length(sample_names$Sample_name), datapath=mypath, expname="nano/filtered", sample_namesdb=sample_names)
-
+#this line prints the HIVMMER commands for all samples in your sample sheet
+#note you may want to modify the indexes so that the controls are not run
 fileConn<-file("O:/JOLabShared/SaraDrescher/Code/HIVMMERCommands_filtered_cons.txt")
-writeLines(c(noquote("#!/bin/sh"), noquote("cd /home/sdresche/JOLabShared/SaraDrescher/Molecular_clock"), write_HIVMMER_Command(7:18, expname="nano/filtered", sample_namesdb=sample_names, datapath=mypath)), fileConn)
+writeLines(c(noquote("#!/bin/sh"), noquote("cd /home/sdresche/JOLabShared/SaraDrescher/Molecular_clock"), write_HIVMMER_Command(1:length(sample_names$Sample_Name), expname="nano/filtered", sample_namesdb=sample_names, datapath=mypath)), fileConn)
 close(fileConn)
 
 
