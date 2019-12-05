@@ -22,10 +22,12 @@ pol_ref="O:/Documents/molecular_clock/HIV1_ALL_2010_pol_DNA.fasta"
 pol_outfile="O:/Documents/molecular_clock/PolACD_w_HXB2_ref.fasta"
 
 make_ref(pol_ref, pol_outfile)
+make_ref(gag_ref, gag_outfile)
 
 #to build a HIVMMER index file, use the command:
+#hivmmer-trim-reference PolACD_w_HXB2_ref.fasta > PolACD.trimmed.aa.fasta
+#hmmbuild  PolACD.trimmed.aa.hmm PolACD.trimmed.aa.fasta
 
-#hmmbuild PolACD_w_HXB2_ref.hmm PolACD_w_HXB2_ref.fasta
 
 #Next step is to use the HIVMMER command:
 
